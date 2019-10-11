@@ -35,7 +35,7 @@ class League(object):
         self.league_id = league_id
         self.year = year
         # older season data is stored at a different endpoint 
-        if year < 2018:
+        if year < 2019:
             self.ENDPOINT = "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + str(league_id) + "?seasonId=" + str(year)
         else:
             self.ENDPOINT = "https://fantasy.espn.com/apis/v3/games/FFL/seasons/" + str(year) + "/segments/0/leagues/" + str(league_id)
@@ -68,8 +68,8 @@ class League(object):
 
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
-        if self.year < 2018:
+        data = r.json() if self.year > 2018 else r.json()[0]
+        if self.year < 2019:
             self.current_week = data['scoringPeriodId']
         else:
             self.current_week = data['status']['currentMatchupPeriod']
@@ -91,7 +91,7 @@ class League(object):
 
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
+        data = r.json() if self.year > 2018 else r.json()[0]
         teams = data['teams']
         members = data['members']
 
@@ -102,7 +102,7 @@ class League(object):
         self.status = r.status_code
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
+        data = r.json() if self.year > 2018 else r.json()[0]
         schedule = data['schedule']
 
         params = {
@@ -112,7 +112,7 @@ class League(object):
         self.status = r.status_code
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
+        data = r.json() if self.year > 2018 else r.json()[0]
         team_roster = {}
         for team in data['teams']:
             team_roster[team['id']] = team['roster']
@@ -154,7 +154,7 @@ class League(object):
 
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
+        data = r.json() if self.year > 2018 else r.json()[0]
         self.settings = Settings(data['settings'])
     
     def _fetch_players(self):
@@ -186,7 +186,7 @@ class League(object):
 
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
+        data = r.json() if self.year > 2018 else r.json()[0]
         
         # League has not drafted yet
         if not data['draftDetail']['drafted']:
@@ -250,7 +250,7 @@ class League(object):
         self.status = r.status_code
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
+        data = r.json() if self.year > 2018 else r.json()[0]
         team_roster = {}
         for team in data['teams']:
             team_roster[team['id']] = team['roster']
@@ -334,7 +334,7 @@ class League(object):
         self.status = r.status_code
         checkRequestStatus(self.status)
 
-        data = r.json() if self.year > 2017 else r.json()[0]
+        data = r.json() if self.year > 2018 else r.json()[0]
 
         schedule = data['schedule']
         matchups = [Matchup(matchup) for matchup in schedule if matchup['matchupPeriodId'] == week]
