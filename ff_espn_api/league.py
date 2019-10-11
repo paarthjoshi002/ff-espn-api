@@ -66,7 +66,6 @@ class League(object):
         r = requests.get(self.ENDPOINT, params='', cookies=self.cookies)
         self.status = r.status_code
 
-        print("checking request")
         checkRequestStatus(self.status)
 
         data = r.json() if self.year > 2018 else r.json()[0]
